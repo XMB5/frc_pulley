@@ -7,11 +7,11 @@
 
 ## Gallery
 
-[pulley_21t](stls/pulley_21t.stl)
+### [pulley_21t](stls/pulley_21t.stl)
 ![21-tooth pulley](imgs/pulley_21t.png)
 
-[pulley_52t_hex_shaft](stls/pulley_52t_hex_shaft.stl)
+### [pulley_52t_hex_shaft](stls/pulley_52t_hex_shaft.stl)
 ![52-tooth hex shaft pulley](imgs/pulley_52t_hex_shaft.png)
 
-[pulley_52t_hub](stls/pulley_52t_hub.stl)
+### [pulley_52t_hub](stls/pulley_52t_hub.stl)
 ![52-tooth hub pulley](imgs/pulley_52t_hub.png)
