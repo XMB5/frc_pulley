@@ -7,4 +7,4 @@
 
 ## Gallery
 
-![stls/pulley_21t.stl](stls/pulley_21t.stl)
+![21-tooth pulley](stls/pulley_21t.stl "pulley_21t")
