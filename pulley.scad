@@ -23,12 +23,12 @@
 // tuneable constants
 
 // Number of teeth, standard Mendel T5 belt = 8, gives Outside Diameter of 11.88mm
-teeth = 8; 	
+teeth = 42; 	
 // Select fundamental profile
-profile = 6;		// [1:MXL, 2:40DP, 3:XL, 4:H, 5:T2.5, 6:T5, 7:T10, 8:AT5, 9:HTD_3mm, 10:HTD_5mm, 11:HTD_8mm, 12:GT2_2mm, 13:GT2_3mm, 14:GT2_5mm]
+profile = 10;		// [1:MXL, 2:40DP, 3:XL, 4:H, 5:T2.5, 6:T5, 7:T10, 8:AT5, 9:HTD_3mm, 10:HTD_5mm, 11:HTD_8mm, 12:GT2_2mm, 13:GT2_3mm, 14:GT2_5mm]
 
 // Diameter of the motor shaft (NEMA17 motor shaft exact diameter = 5)
-motor_shaft = 5.2;	
+motor_shaft = 15;	
 // 3mm hole diameter
 m3_dia = 3.2;		
 // Select nut type
@@ -39,17 +39,17 @@ m3_nut_flats = 5.7;
 m3_nut_depth = 2.7;	
 
 // Should a belt retainer be added above the teeth?
-retainer = 0;		// [0:No, 1:Yes]
+retainer = 1;		// [0:No, 1:Yes]
 // Height of the retainer above teeth (default: 1.5)
-retainer_ht = 1.5;	
+retainer_ht = 3;	
 // Should a belt retainer be added below the teeth?
-idler = 0;			// [0:No, 1:Yes]
+idler = 1;			// [0:No, 1:Yes]
 // Height of the retainer below teeth (default: 1.5)
-idler_ht = 1.5;
+idler_ht = 3;
 // Length of toothed part of pulley (default: 12)
-pulley_t_ht = 12;	
+pulley_t_ht = 17;	
 // Height of pulley base (default: 8 - Set to same as 'Idler Ht' if you want an idler but no pulley)
-pulley_b_ht = 8;	
+pulley_b_ht = 0;	
 // Diameter of pulley base (default: 20)
 pulley_b_dia = 20;	
 // Number of captive nuts (default: 1)
@@ -64,11 +64,14 @@ text_offset = -10;
 
 /* [FRC-specific options] */
 
-// depth of AndyMark hub cutout on either side
-hub_hole_depth = 12;
+// depth of cutout on either side, meant for AndyMark hubs or bearing
+cutout_depth = 0;
+
+// diameter of cutout, 30mm works hubs but is too large for bearings
+cutout_diameter = 30;
 
 // 0.5 hex shaft bore
-hex_shaft = false;
+hex_shaft = true;
 
 // 6 holes around center, for AndyMark hubs
 hub_holes = true;
@@ -209,13 +212,24 @@ module pulley( belt_type , pulley_OD , tooth_depth , tooth_width )
 	
 		}
 	   
-		//hole for motor shaft
-		translate([0,0,-50])cylinder(r=motor_shaft/2,h=100,$fn=motor_shaft*4);
+        if (hex_shaft) {
+            //hex shaft
+            //reference: reference: https://www.andymark.com/products/1-2-in-hex-hub
+            translate([0,0,-50]) {
+                //rotate so that the hex shaft aligns with hex hub holes
+                rotate([0,0,30]) {
+                    cylinder_outer(height=100, radius=25.4/4, fn=6);
+                }
+            }
+        } else {
+            //hole for motor shaft
+            translate([0,0,-50])cylinder(r=motor_shaft/2,h=100,$fn=motor_shaft*4);
+        }
         
         //hole for hub inner part
-        if (hub_hole_depth > 0) {
-            translate([0,0,-idler_ht])cylinder(d=30,h=hub_hole_depth,$fn=50);
-            translate([0,0,pulley_t_ht + retainer_ht - hub_hole_depth])cylinder(d=30,h=hub_hole_depth,$fn=50);
+        if (cutout_depth > 0) {
+            translate([0,0,-idler_ht])cylinder(d=cutout_diameter,h=cutout_depth,$fn=50);
+            translate([0,0,pulley_t_ht + retainer_ht - cutout_depth])cylinder(d=cutout_diameter,h=cutout_depth,$fn=50);
         }
         
         //text
@@ -223,17 +237,6 @@ module pulley( belt_type , pulley_OD , tooth_depth , tooth_width )
             scale([1,1,-1]) {
                 linear_extrude(2) {
                     text(str(teeth, "T"),halign="center",size=6);
-                }
-            }
-        }
-        
-        //hex shaft
-        //reference: reference: https://www.andymark.com/products/1-2-in-hex-hub
-        if (hex_shaft) {
-            translate([0,0,-50]) {
-                //rotate so that the hex shaft aligns with hex hub holes
-                rotate([0,0,30]) {
-                    cylinder_outer(height=100, radius=25.4/4, fn=6);
                 }
             }
         }
