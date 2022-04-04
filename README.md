@@ -9,7 +9,7 @@
 
 [stls/pulley_21t.stl](stls/pulley_21t.stl)
 ```stl
-solid 
+solid pulley_21t
   facet normal 0.000000E+00 0.000000E+00 1.000000E+00
     outer loop
       vertex 6.464915E+00 -1.473912E+01 1.700000E+01
