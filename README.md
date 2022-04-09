@@ -15,3 +15,6 @@
 
 ### [pulley_52t_hub](stls/pulley_52t_hub.stl)
 ![52-tooth hub pulley](imgs/pulley_52t_hub.png)
+
+### [pulley_52t_hex_shaft_6mm_retainer](stls/pulley_52t_hex_shaft_6mm_retainer.stl)
+![52-tooth hub pulley](imgs/pulley_52t_hex_shaft_6mm_retainer.png)
